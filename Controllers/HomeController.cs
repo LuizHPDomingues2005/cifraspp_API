@@ -12,7 +12,7 @@ namespace cifraspp_API.Controllers
             return new ContentResult
             {
                 ContentType = "text/html",
-                Content = "<h1>Funciona!!!!</h1>"
+                Content = "<h1></h1>"
             };
         }
         
