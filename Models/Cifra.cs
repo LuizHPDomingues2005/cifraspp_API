@@ -8,7 +8,7 @@ namespace cifraspp_API.Models
         public string? nomeMusica { get; set; }
         public DateTime dataCriada { get; set; }
         public DateTime dataEditada { get; set; }
-        public string? letra { get; set; }
+        public string? letraEAcordes { get; set; }
 
     }
 }
