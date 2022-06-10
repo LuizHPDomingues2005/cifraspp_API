@@ -9,11 +9,11 @@ namespace cifraspp_API.Controllers
     public class ContaController : ControllerBase
     {
         // contexto que sera utilizado
-        private CifrasContext _context;
+        private readonly CifrasContext _context;
 
         public ContaController(CifrasContext context)
         {
-            context = _context;
+            _context = context;
         }
 
         [HttpGet] // get de todas as contas
@@ -42,7 +42,7 @@ namespace cifraspp_API.Controllers
         public async Task<ActionResult> post(Conta model)
         {
             try{
-                _context.Add(model);
+                _context.Conta.Add(model);
                 if(await _context.SaveChangesAsync() == 1)
                 {
                     return Created($"/api/conta/{model.idConta}", model);

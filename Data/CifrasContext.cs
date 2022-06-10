@@ -5,6 +5,7 @@ namespace cifraspp_API.Data
 {
     public class CifrasContext : DbContext
     {
+
         public CifrasContext(DbContextOptions<CifrasContext> options) : base(options)
         {
 

@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace cifraspp_API.Models
 {
     public class Conta
     {
+
+        [Key]
+
         public int idConta { get; set; }
         public string? username { get; set; }
         public string? senha { get; set; }
