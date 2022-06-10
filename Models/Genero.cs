@@ -9,7 +9,7 @@ namespace cifraspp_API.Models
 
         public int idGenero { get; set; }
         public string? nomeGenero { get; set; }
-        public int? qtdMusica { get; set; }
+        public int? qtdDeCifras { get; set; }
         
     }
 }

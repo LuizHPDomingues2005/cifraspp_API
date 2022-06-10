@@ -2,32 +2,33 @@ using Microsoft.AspNetCore.Mvc;
 using cifraspp_API.Data;
 using cifraspp_API.Models;
 
+
 namespace cifraspp_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContaController : ControllerBase
+
+    public class GeneroController : ControllerBase
     {
-        // contexto que sera utilizado
         private readonly CifrasContext _context;
 
-        public ContaController(CifrasContext context)
+        public GeneroController(CifrasContext context)
         {
             _context = context;
         }
 
-        [HttpGet] // get de todas as contas
-        public ActionResult<List<Conta>> GetAll()
+        [HttpGet]
+        public ActionResult<List<Genero>> GetAll()
         {
-            return _context.Conta.ToList();
+            return _context.Genero.ToList();
         }
 
-        [HttpGet("{idConta}")] // get de uma conta em específico
-        public ActionResult<List<Conta>> Get(int idConta)
+        [HttpGet("{idGenero}")]
+        public ActionResult<List<Genero>> Get(int idGenero)
         {
             try
             {
-                var result = _context.Conta.Find(idConta);
+                var result = _context.Genero.Find(idGenero);
                 if (result == null)
                 {
                     return NotFound();
@@ -40,15 +41,15 @@ namespace cifraspp_API.Controllers
             }
         }
 
-        [HttpPost] // criação de uma conta
-        public async Task<ActionResult> post(Conta model)
+        [HttpPost] // criação de um Genero
+        public async Task<ActionResult> post(Genero model)
         {
             try
             {
-                _context.Conta.Add(model);
+                _context.Genero.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
-                    return Created($"/api/conta/{model.idConta}", model);
+                    return Created($"/api/conta/{model.idGenero}", model);
                 }
             }
             catch
@@ -58,12 +59,14 @@ namespace cifraspp_API.Controllers
             return BadRequest(); // se não conseguir incluir, retorna BadRequest
         }
 
-        [HttpDelete("{idConta}")] // exclusão de conta
-        public async Task<ActionResult> delete(int idConta)
+
+
+        [HttpDelete("{idGenero}")] // exclusão de Genero
+        public async Task<ActionResult> delete(int idGenero)
         {
             try
             {
-                var result = _context.Conta.Find(idConta);
+                var result = _context.Genero.Find(idGenero);
                 if (result == null)
                 {
                     return NotFound();
@@ -78,23 +81,21 @@ namespace cifraspp_API.Controllers
             }
         }
 
-        [HttpPut("{idConta}")]
-        public async Task<IActionResult> put(int idConta, Conta dadosContaAlt)
+        [HttpPut("{idGenero}")]
+        public async Task<IActionResult> put(int idGenero, Genero dadosGeneroAlt)
         {
             try
             {
                 //verifica se existe aluno a ser alterado
-                var result = await _context.Conta.FindAsync(idConta);
-                if (idConta != result.idConta)
+                var result = await _context.Genero.FindAsync(idGenero);
+                if (idGenero != result.idGenero)
                 {
                     return NotFound();
                 }
-                result.username = dadosContaAlt.username;
-                result.senha = dadosContaAlt.senha;
-                result.email = dadosContaAlt.email;
-                result.qtdComentarios = dadosContaAlt.qtdComentarios;
+                result.nomeGenero = dadosGeneroAlt.nomeGenero;
+                result.qtdDeCifras = dadosGeneroAlt.qtdDeCifras;
                 await _context.SaveChangesAsync();
-                return Created($"/api/conta/{dadosContaAlt.idConta}", dadosContaAlt);
+                return Created($"/api/conta/{dadosGeneroAlt.idGenero}", dadosGeneroAlt);
             }
             catch
             {
@@ -102,6 +103,7 @@ namespace cifraspp_API.Controllers
             }
 
         }
+
 
 
     }
