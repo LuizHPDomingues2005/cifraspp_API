@@ -17,5 +17,13 @@ namespace cifraspp_API.Data
         public DbSet<Cantor> Cantor { get; set; }
         public DbSet<Comentario> Comentario { get; set; }
         public DbSet<Genero> Genero { get; set; }
+
+        // classes de tabelas mescladas
+
+        public DbSet<ContaCantorFavorito> ContaCantorFavorito { get; set; }
+        public DbSet<ContaCifraFavorita> ContaCifraFavorita { get; set; }
+        public DbSet<ContaGeneroFavorito> ContaGeneroFavorito{ get; set; }
+        public DbSet<ContaComentario> ContaComentario { get; set; }
+        public DbSet<ContaEdicao>  ContaEdicao{ get; set; }
     }
 }

@@ -6,31 +6,28 @@ namespace cifraspp_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ComentarioController : ControllerBase
+    public class ContaEdicaoController : ControllerBase
     {
+        // contexto que sera utilizado
         private readonly CifrasContext _context;
 
-        public ComentarioController(CifrasContext context)
+        public ContaEdicaoController(CifrasContext context)
         {
             _context = context;
         }
 
-
-
-
-        [HttpGet]
-        public ActionResult<List<Comentario>> GetAll()
+        [HttpGet] 
+        public ActionResult<List<ContaEdicao>> GetAll()
         {
-            return _context.Comentario.ToList();
+            return _context.ContaEdicao.ToList();
         }
 
-
-        [HttpGet("{idComentario}")]
-        public ActionResult<List<Comentario>> Get(int idComentario)
+        [HttpGet("{idEdicao}")]
+        public ActionResult<List<ContaEdicao>> Get(int idEdicao)
         {
             try
             {
-                var result = _context.Comentario.Find(idComentario);
+                var result = _context.ContaEdicao.Find(idEdicao);
                 if (result == null)
                 {
                     return NotFound();
@@ -43,17 +40,32 @@ namespace cifraspp_API.Controllers
             }
         }
 
-
-
-        [HttpPost] // criação de um comentario
-        public async Task<ActionResult> post(Comentario model)
+        [HttpPost]
+        public async Task<ActionResult> post(ContaEdicao model)
         {
+
+                int idCifra = model.idCifra;
+                int idConta = model.idConta;
+
+                var resultCifra = await _context.Cifra.FindAsync(idCifra);
+                var resultConta = await _context.Conta.FindAsync(idConta);
+
+                if (resultCifra == null)
+                {
+                    return NotFound("Cifra não encontrada.");
+                }
+                else if (resultConta == null)
+                {
+                    return NotFound("Conta não encontrada.");
+                }
+
             try
             {
-                _context.Comentario.Add(model);
+
+                _context.ContaEdicao.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
-                    return Created($"/api/comentario/{model.idComentario}", model);
+                    return Created($"/api/ContaEdicao/{model.idEdicao}", model);
                 }
             }
             catch
@@ -63,14 +75,12 @@ namespace cifraspp_API.Controllers
             return BadRequest(); // se não conseguir incluir, retorna BadRequest
         }
 
-
-
-        [HttpDelete("{idComentario}")] // exclusão de comentario
-        public async Task<ActionResult> delete(int idComentario)
+        [HttpDelete("{idEdicao}")] // exclusão de ContaEdicao
+        public async Task<ActionResult> delete(int idEdicao)
         {
             try
             {
-                var result = _context.Comentario.Find(idComentario);
+                var result = _context.ContaEdicao.Find(idEdicao);
                 if (result == null)
                 {
                     return NotFound();
@@ -85,22 +95,21 @@ namespace cifraspp_API.Controllers
             }
         }
 
-
-
-        [HttpPut("{idComentario}")]
-        public async Task<IActionResult> put(int idComentario, Comentario dadosComentarioAlt)
+        [HttpPut("{idEdicao}")]
+        public async Task<IActionResult> put(int idEdicao, ContaEdicao dadosContaCifraFavoritaAlt)
         {
             try
             {
                 //verifica se existe aluno a ser alterado
-                var result = await _context.Comentario.FindAsync(idComentario);
-                if (idComentario != result.idComentario)
+                var result = await _context.ContaEdicao.FindAsync(idEdicao);
+                if (idEdicao != result.idEdicao)
                 {
                     return NotFound();
                 }
-                result.mensagem = dadosComentarioAlt.mensagem;
+                result.idCifra = dadosContaCifraFavoritaAlt.idCifra;
+                result.idConta = dadosContaCifraFavoritaAlt.idConta;
                 await _context.SaveChangesAsync();
-                return Created($"/api/comentario/{dadosComentarioAlt.idComentario}", dadosComentarioAlt);
+                return Created($"/api/ContaEdicao/{dadosContaCifraFavoritaAlt.idEdicao}", dadosContaCifraFavoritaAlt);
             }
             catch
             {
@@ -108,7 +117,6 @@ namespace cifraspp_API.Controllers
             }
 
         }
-
 
 
     }

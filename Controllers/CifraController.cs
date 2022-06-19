@@ -139,7 +139,7 @@ namespace cifraspp_API.Controllers
                     result.dataEditada = dadosCifraAlt.dataEditada;
                     result.letraEAcordes = dadosCifraAlt.letraEAcordes;
                     await _context.SaveChangesAsync();
-                    return Created($"/api/conta/{dadosCifraAlt.idCifra}", dadosCifraAlt);
+                    return Created($"/api/cifra/{dadosCifraAlt.idCifra}", dadosCifraAlt);
                 }
             }
             catch

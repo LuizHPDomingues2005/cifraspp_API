@@ -49,7 +49,7 @@ namespace cifraspp_API.Controllers
                 _context.Genero.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
-                    return Created($"/api/conta/{model.idGenero}", model);
+                    return Created($"/api/genero/{model.idGenero}", model);
                 }
             }
             catch
@@ -95,7 +95,7 @@ namespace cifraspp_API.Controllers
                 result.nomeGenero = dadosGeneroAlt.nomeGenero;
                 result.qtdDeCifras = dadosGeneroAlt.qtdDeCifras;
                 await _context.SaveChangesAsync();
-                return Created($"/api/conta/{dadosGeneroAlt.idGenero}", dadosGeneroAlt);
+                return Created($"/api/genero/{dadosGeneroAlt.idGenero}", dadosGeneroAlt);
             }
             catch
             {

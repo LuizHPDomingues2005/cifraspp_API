@@ -49,7 +49,7 @@ namespace cifraspp_API.Controllers
                 _context.Cantor.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
-                    return Created($"/api/conta/{model.idCantor}", model);
+                    return Created($"/api/cantor/{model.idCantor}", model);
                 }
             }
             catch
@@ -95,7 +95,7 @@ namespace cifraspp_API.Controllers
                 result.nomeCantor = dadosCantorAlt.nomeCantor;
                 result.qtdDeCifras = dadosCantorAlt.qtdDeCifras;
                 await _context.SaveChangesAsync();
-                return Created($"/api/conta/{dadosCantorAlt.idCantor}", dadosCantorAlt);
+                return Created($"/api/cantor/{dadosCantorAlt.idCantor}", dadosCantorAlt);
             }
             catch
             {
