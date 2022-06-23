@@ -5,7 +5,7 @@ using cifraspp_API.Models;
 
 namespace cifraspp_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
 
     public class GeneroController : ControllerBase
@@ -23,8 +23,9 @@ namespace cifraspp_API.Controllers
             return _context.Genero.ToList();
         }
 
+        [ActionName("idGenero")]
         [HttpGet("{idGenero}")]
-        public ActionResult<List<Genero>> Get(int idGenero)
+        public ActionResult<List<Genero>> GetById(int idGenero)
         {
             try
             {
@@ -40,6 +41,26 @@ namespace cifraspp_API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
             }
         }
+
+        [ActionName("nomeGenero")]
+        [HttpGet("{nomeGenero}")] // get de uma conta em específico
+        public ActionResult<List<Genero>> GetByNome(string nomeGenero)
+        {
+            try
+            {
+                var result = _context.Genero.Where(g => g.nomeGenero == nomeGenero);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
+            }
+        }
+
 
         [HttpPost] // criação de um Genero
         public async Task<ActionResult> post(Genero model)
