@@ -14,6 +14,7 @@ namespace cifraspp_API.Models
         public DateTime dataCriada { get; set; }
         public DateTime dataEditada { get; set; }
         public string? letraEAcordes { get; set; }
+        public string? linkMusica { get; set; }
 
     }
 }

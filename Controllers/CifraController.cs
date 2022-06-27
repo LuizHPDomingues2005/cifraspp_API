@@ -138,6 +138,7 @@ namespace cifraspp_API.Controllers
                     result.nomeMusica = dadosCifraAlt.nomeMusica;
                     result.dataEditada = dadosCifraAlt.dataEditada;
                     result.letraEAcordes = dadosCifraAlt.letraEAcordes;
+                    result.linkMusica = dadosCifraAlt.linkMusica;
                     await _context.SaveChangesAsync();
                     return Created($"/api/cifra/{dadosCifraAlt.idCifra}", dadosCifraAlt);
                 }
