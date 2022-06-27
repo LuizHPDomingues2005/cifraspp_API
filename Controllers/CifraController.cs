@@ -4,7 +4,7 @@ using cifraspp_API.Models;
 
 namespace cifraspp_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CifraController : ControllerBase
     {
@@ -25,9 +25,9 @@ namespace cifraspp_API.Controllers
             return _context.Cifra.ToList();
         }
 
-
+        [ActionName("idCifra")]
         [HttpGet("{idCifra}")] // get de uma cifra em específico
-        public ActionResult<List<Cifra>> Get(int idCifra)
+        public ActionResult<List<Cifra>> GetById(int idCifra)
         {
             try
             {
@@ -43,6 +43,26 @@ namespace cifraspp_API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
             }
         }
+
+        [ActionName("nomeMusica")]
+        [HttpGet("{nomeMusica}")] // get de uma conta em específico
+        public ActionResult<List<Cifra>> GetByNome(string nomeMusica)
+        {
+            try
+            {
+                var result = _context.Cifra.Where(c => c.nomeMusica == nomeMusica);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
+            }
+        }
+
 
         [HttpPost] // criação de uma cifra
         public async Task<ActionResult> post(Cifra model)

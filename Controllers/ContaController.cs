@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using cifraspp_API.Data;
 using cifraspp_API.Models;
+using cifraspp_API.Crypto;
+
 
 namespace cifraspp_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ContaController : ControllerBase
     {
@@ -22,8 +24,9 @@ namespace cifraspp_API.Controllers
             return _context.Conta.ToList();
         }
 
+        [ActionName("idConta")]
         [HttpGet("{idConta}")] // get de uma conta em específico
-        public ActionResult<List<Conta>> Get(int idConta)
+        public ActionResult<List<Conta>> GetById(int idConta)
         {
             try
             {
@@ -40,9 +43,34 @@ namespace cifraspp_API.Controllers
             }
         }
 
+        [ActionName("usernameConta")]
+        [HttpGet("{usernameConta}")] // get de uma conta em específico
+        public ActionResult<List<Conta>> GetByNome(string usernameConta)
+        {
+            try
+            {
+                var result = _context.Conta.Where(c => c.username == usernameConta);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
+            }
+        }
+
         [HttpPost] // criação de uma conta
         public async Task<ActionResult> post(Conta model)
         {
+
+            Crypto.TrataHashGenerica crypto = new TrataHashGenerica();
+            string senhaCrip = crypto.GerarHash(model.senha);
+
+            System.Console.Out.WriteLine(senhaCrip);
+
             try
             {
                 _context.Conta.Add(model);

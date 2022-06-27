@@ -5,7 +5,7 @@ using cifraspp_API.Models;
 
 namespace cifraspp_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
 
     public class CantorController : ControllerBase
@@ -23,6 +23,7 @@ namespace cifraspp_API.Controllers
             return _context.Cantor.ToList();
         }
 
+        [ActionName("idCantor")]
         [HttpGet("{idCantor}")]
         public ActionResult<List<Cantor>> Get(int idCantor)
         {
@@ -40,6 +41,28 @@ namespace cifraspp_API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
             }
         }
+
+
+        [ActionName("nomeCantor")]
+        [HttpGet("{nomeCantor}")] // get de uma conta em específico
+        public ActionResult<List<Cantor>> GetByNome(string nomeCantor)
+        {
+            try
+            {
+                var result = _context.Cantor.Where(g => g.nomeCantor == nomeCantor);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acesso do Banco de dados");
+            }
+        }
+
+
 
         [HttpPost] // criação de um cantor
         public async Task<ActionResult> post(Cantor model)
