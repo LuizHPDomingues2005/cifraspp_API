@@ -66,11 +66,6 @@ namespace cifraspp_API.Controllers
         public async Task<ActionResult> post(Conta model)
         {
 
-            Crypto.TrataHashGenerica crypto = new TrataHashGenerica();
-            string senhaCrip = crypto.GerarHash(model.senha);
-
-            System.Console.Out.WriteLine(senhaCrip);
-
             try
             {
                 _context.Conta.Add(model);
