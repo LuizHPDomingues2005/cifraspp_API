@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using cifraspp_API.Data;
 using cifraspp_API.Models;
-using cifraspp_API.Crypto;
 
 
 namespace cifraspp_API.Controllers
